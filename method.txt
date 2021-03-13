@@ -1,0 +1,30 @@
+ void redistributeInteriorVerticesTowardsLink(float ratio)  // even interior vertiex locations
+  {    
+    VCT[] W = new VCT [nv];    // correction vectors
+    // PROJECT 4 PHASE B (EXTRA):  STUDENT SHIULD PROVIDE THIS CODE
+    int neighbors [] = new int [nv];
+    for (int i = 0; i < nv; i++) {
+      W[i] = V(0, 0);
+    }
+
+    //how many neighbors each vertex
+    for (int i = 0; i < nc; i++) {
+      if (isInterior[v(i)]) {
+        neighbors[v(i)] += 1;
+      }
+    }
+    //for each vertex i compute W for the number of neighbors
+    for (int j = 0; j < nc; j++) {
+      if (isInterior[v(j)]) {
+        //calculate weight
+        //set weight
+        PNT avg = P(LocationOfVertexOfCorner(n(j)),LocationOfVertexOfCorner(j));
+        W[v(j)].add(V(LocationOfVertexOfCorner(j), avg));
+      }
+    }
+    for (int j = 0; j < nv; j++) {
+      if (isInterior[j]) {
+        G[j].translate(W[j].scaleBy(ratio/neighbors[j]));
+      }
+    }
+  }
